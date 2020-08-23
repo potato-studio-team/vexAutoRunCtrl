@@ -16,6 +16,8 @@ int calibResultB = 0; // mpu校准与测量差值，及校准返回值，基准�
 int AccTime = 2; // 默认Acc倍数
 int GyroTime = 255; // 默认Gyro倍数
 
+short power = 0; // 设置开关状态
+
 //----------------------------------------------------------------------------------------------MPU6050-----------------------------------------------------------------------------------------//
 
 // 配置倍率 Acc
@@ -309,6 +311,9 @@ void RmotorGo(int speed) {
 
 // the setup function runs once when you press reset or power the board
 void setup() {
+	// 设置运行开关
+	pinMode(A3, INPUT_PULLUP);
+
 	Serial.begin(9600);// 设置串口监视器波特率
 	// mpu setup
 	Wire.begin();//默认作为master设备打开
@@ -329,6 +334,7 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	RmotorGo(255);
-	LmotorGo(255);
+	//9V 供电，禁速度超过200
+	RmotorGo(150);
+	LmotorGo(150);
 }
